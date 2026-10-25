@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Corea MXN</title>
+
+<style>
+body{
+    font-family: Arial, sans-serif;
+    background:#f5f5f5;
+    margin:0;
+    padding:20px;
+}
+
+.container{
+    max-width:500px;
+    margin:auto;
+    background:white;
+    padding:20px;
+    border-radius:15px;
+    box-shadow:0 2px 10px rgba(0,0,0,.15);
+}
+
+h1{
+    text-align:center;
+    color:#333;
+}
+
+label{
+    display:block;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin-top:5px;
+    box-sizing:border-box;
+    border:1px solid #ccc;
+    border-radius:8px;
+    font-size:16px;
+}
+
+button{
+    width:100%;
+    margin-top:20px;
+    padding:15px;
+    border:none;
+    background:#0078D4;
+    color:white;
+    font-size:18px;
+    border-radius:10px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#005ea6;
+}
+
+.resultados{
+    margin-top:25px;
+}
+
+.card{
+    background:#f8f9fa;
+    padding:12px;
+    margin-bottom:10px;
+    border-radius:8px;
+}
+
+.titulo{
+    font-weight:bold;
+    color:#444;
+}
+
+.valor{
+    font-size:24px;
+    color:#0078D4;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>🇰🇷 Shopping Corea</h1>
+
+<label>Precio en Wones (KRW)</label>
+<input type="number" id="krw" value="100000">
+
+<label>Tipo de cambio KRW → MXN</label>
+<input type="number" id="tc" value="0.01411" step="0.00001">
+
+<label>Ajuste Amex (%)</label>
+<input type="number" id="amex" value="15">
+
+<button onclick="calcular()">Calcular</button>
+
+<div class="resultados">
+
+<div class="card">
+<div class="titulo">Costo MXN</div>
+<div class="valor" id="costo">$0</div>
+</div>
+
+<div class="card">
+<div class="titulo">Venta 25%</div>
+<div class="valor" id="m25">$0</div>
+</div>
+
+<div class="card">
+<div class="titulo">Venta 30%</div>
+<div class="valor" id="m30">$0</div>
+</div>
+
+<div class="card">
+<div class="titulo">Venta 35%</div>
+<div class="valor" id="m35">$0</div>
+</div>
+
+<div class="card">
+<div class="titulo">Venta 40%</div>
+<div class="valor" id="m40">$0</div>
+</div>
+
+</div>
+</div>
+
+<script>
+
+function formato(numero){
+    return '$' + numero.toLocaleString('es-MX',{
+        minimumFractionDigits:2,
+        maximumFractionDigits:2
+    });
+}
+
+function calcular(){
+
+    let krw = parseFloat(document.getElementById("krw").value) || 0;
+    let tc = parseFloat(document.getElementById("tc").value) || 0;
+    let amex = parseFloat(document.getElementById("amex").value) || 0;
+
+    let costo = krw * tc;
+    costo = costo * (1 + amex/100);
+
+    document.getElementById("costo").innerText =
+        formato(costo);
+
+    document.getElementById("m25").innerText =
+        formato(costo * 1.25);
+
+    document.getElementById("m30").innerText =
+        formato(costo * 1.30);
+
+    document.getElementById("m35").innerText =
+        formato(costo * 1.35);
+
+    document.getElementById("m40").innerText =
+        formato(costo * 1.40);
+}
+
+calcular();
+
+</script>
+
+</body>
+</html>
